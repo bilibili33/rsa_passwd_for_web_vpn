@@ -139,7 +139,7 @@
 			<p>本操作全部在浏览器本地执行，勿慌</p>
 		</div>
 		<div class="insert">
-			<input id="password" tabindex="2" value="" autocomplete="off" type="text" placeholder="密码 Password">
+			<input id="password" tabindex="2" value="" autocomplete="off" type="text" placeholder="密码 Password" onkeypress="bindEnter()">
 			<button id="passbutton" onclick="checkPassLogin();">加 密</button>
 		</div>
 		<div class="out">
@@ -161,16 +161,19 @@
 <script type="text/javascript">
 function checkPassLogin() {
 	var thisPwd = document.getElementById("password").value;
-	if(thisPwd.length != 256){
-		RSAUtils.setMaxDigits(131);
-		var key = RSAUtils.getKeyPair("010001", '', "008aed7e057fe8f14c73550b0e6467b023616ddc8fa91846d2613cdb7f7621e3cada4cd5d812d627af6b87727ade4e26d26208b7326815941492b2204c3167ab2d53df1e3a2c9153bdb7c8c2e968df97a5e7e01cc410f92c4c2c2fba529b3ee988ebc1fca99ff5119e036d732c368acf8beba01aa2fdafa45b21e4de4928d0d403");
-		var result = RSAUtils.encryptedString(key, thisPwd);
-		
-		var change_output = document.getElementById("output");
-		change_output.value = result;
-		
-		var change_info = document.getElementById("info");
-		change_info.textContent = "复制写不来，请手动复制";
+	if (thisPwd != ""){
+		if(thisPwd.length != 256){
+			RSAUtils.setMaxDigits(131);
+			var key = RSAUtils.getKeyPair("010001", '', "008aed7e057fe8f14c73550b0e6467b023616ddc8fa91846d2613cdb7f7621e3cada4cd5d812d627af6b87727ade4e26d26208b7326815941492b2204c3167ab2d53df1e3a2c9153bdb7c8c2e968df97a5e7e01cc410f92c4c2c2fba529b3ee988ebc1fca99ff5119e036d732c368acf8beba01aa2fdafa45b21e4de4928d0d403");
+			var result = RSAUtils.encryptedString(key, thisPwd);
+			
+			var change_output = document.getElementById("output");
+			change_output.value = result;
+			
+			// var change_info = document.getElementById("info");
+			// change_info.textContent = "复制写不来，请手动复制";
+			copypasswd();
+		}
 	}
 return true;
 }
@@ -179,11 +182,11 @@ function copypasswd(){
 	var passwd = document.getElementById("output");
 	passwd.select();
 	document.execCommand("Copy");
-	var check_ = document.getElementById("check");
-	check_.textContent = "已复制";
+	var check = document.getElementById("info");
+	check.textContent = "已复制";
 }
 
-function BindEnter(){
+function bindEnter(){
 	if(event.keyCode=="13"){
 		document.getElementById("passbutton").click();
 	}
