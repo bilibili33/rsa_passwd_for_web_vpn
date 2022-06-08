@@ -28,6 +28,7 @@
 			border: 1px solid rgba(255, 255, 255, 0.5);
 			border-radius: 10px;
 			backdrop-filter: blur(10px);
+			transition: 0.5s;
 		}
 		.top-info{
 			display: flex;
@@ -42,8 +43,9 @@
 			font-size: 26px;
 			color: rgba(255, 255, 255, 0.9);
 			letter-spacing: 2px;
+			cursor: default;
 		}
-		.top-info > p{
+		.top-info > label{
 			font-size: 14px;
 			color: rgba(0,0,0,0.4);
 			width: 360px;
@@ -84,6 +86,7 @@
 			background-color: rgba(72, 248, 210, 0.8);
 			border-radius: 5px;
 			transition: 0.2s;
+			cursor: pointer;
 		}
 		.insert > button:hover{
 			background-color: rgba(72, 248, 210, 1);
@@ -115,8 +118,9 @@
 			width: 360px;
 			height: 120px;
 			margin-bottom: 10px;
+			font-size: 14px;
 		}
-		.out > span{
+		.out > label{
 			height: 20px;
 			color: rgba(255, 255, 255, 0.9);
 		}
@@ -132,13 +136,29 @@
 		.foot > a:hover{
 			color: rgba(255, 255, 255, 0.9);
 		}
+		.under{
+			margin-top: 15px;
+		}
+		.under > label{
+			color: rgba(255, 192, 17, 0.8);
+			font-weight: bold;
+		}
+		.under > label > a{
+			text-decoration: none;
+			color: rgba(255, 223, 133, 0.8);
+			transition: 0.2s;
+		}
+		.under > label > a:hover{
+			cursor: pointer;
+			color: rgba(255, 152, 152, 0.8);
+		}
 	</style>
 </head>
 <body>
-	<div class="box">
+	<div id="box" class="box">
 		<div class="top-info">
 			<h2>Web-vpn 密码加密</h2>
-			<p>本操作全部在浏览器本地执行，勿慌</p>
+			<label>本操作全部在浏览器本地执行，勿慌</label>
 		</div>
 		<div class="insert">
 			<input id="password" tabindex="2" value="" autocomplete="off" type="text" placeholder="密码 Password" onkeypress="bindEnter()">
@@ -146,19 +166,22 @@
 		</div>
 		<div class="out">
 			<textarea id="output" readonly></textarea>
-			<span id="info"></span>
+			<label id="info"></label>
 		</div>
-		<p class="foot">如果功能异常请使用
+		<label class="foot">如果功能异常请使用
 			<a href="https://www.google.cn/chrome/" class="foot" target="_blank">Chrome</a>
-		</p>
+		</label>
 		<!-- <a href="#" onclick=""></a> -->
 	</div>
-<!--
+	<div class="under">
+		<label>看不清？点 <a onclick="changeBG()">这里</a> 切换样式</label>
+	</div>
+<!-- 
 	<div>
 		<input type="button" value="点击复制" onclick="copypasswd();">
 		<span id="check"></span>
-	</div>
--->
+	</div> -->
+
 <script type="text/javascript" src="security.js"></script>
 <script type="text/javascript">
 function checkPassLogin() {
@@ -195,7 +218,12 @@ function bindEnter(){
 }
 
 function changeBG(){
-
+	var boxColor = getComputedStyle(document.getElementById("box")).backgroundColor;
+	if(boxColor != "rgb(255, 182, 193)"){
+		document.getElementById("box").style.backgroundColor = "rgb(255, 182, 193)";
+	}else{
+		document.getElementById("box").style.removeProperty('background-color')
+	}
 }
 </script>
 </body>
